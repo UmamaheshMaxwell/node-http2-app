@@ -10,10 +10,10 @@ app.use(express.json());
 
 app.use('/api', router);
 
-const server = http2.createSecureServer({});
+const server = http2.createSecureServer({}, app);
 
 const PORT = process.env.PORT || 8080;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server listening to PORT ${PORT} sucessfully !!!`)
 })
