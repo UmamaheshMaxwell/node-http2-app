@@ -18,9 +18,9 @@ const options = {
   allowHTTP1: true
 };
 
-const server = spdy.createServer(options)
+const server = spdy.createServer(options, app)
 
-server.on('request', app);
+//server.on('request', app);
 
 const PORT = process.env.PORT || 8080;
 
