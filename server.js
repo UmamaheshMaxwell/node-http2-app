@@ -1,36 +1,33 @@
-const spdy = require('spdy')
 const express = require('express');
-const cors = require('cors');
+const spdy = require('spdy');
 const fs = require('fs');
-const router = require('./routes/admin.router');
+const adminRouter = require("./routes/admin.router")
 
+const PORT = 8080;
+const CERT_DIR = `${__dirname}/cert`;
+const useSSL = !!process.env.SSL;
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+app.use("/api", adminRouter)
 
-app.use('/api', router);
+function createServer() {
+    if (!useSSL) {
+        return app;
+    }
+    return spdy.createServer(
+        {
+            key: fs.readFileSync(`${CERT_DIR}/server.key`),
+            cert: fs.readFileSync(`${CERT_DIR}/server.cert`),
+            allowHTTP1: true
+        },
+        app
+    );
+}
 
-const options = {
-  key: fs.readFileSync('./cert/server.key'),       // Path to your private key file
-  cert: fs.readFileSync('./cert/server.crt'),  // Path to your certificate file
-  allowHTTP1: true
-};
-
-const server = spdy.createServer(options, (req, res) => {
-    res.writeHead(200);
-    res.end('Hello world over HTTP/2');
-})
-
-
-
-//server.on('request', app);
-
-const PORT = process.env.PORT || 8080;
-
-//spdy.createServer(options).listen(PORT);
+const server = createServer();
 
 server.listen(PORT, () => {
-  console.log(`Server listening to PORT ${PORT} successfully !!!`);
+    console.log(`App listening on port ${PORT}`);
+    console.log(`SSL ${useSSL ? 'enabled' : 'disabled'}`);
 });
