@@ -14,7 +14,7 @@ app.use('/api', router);
 
 const options = {
   key: fs.readFileSync('./cert/server.key'),       // Path to your private key file
-  cert: fs.readFileSync('./cert/server.cert'),  // Path to your certificate file
+  cert: fs.readFileSync('./cert/server.crt'),  // Path to your certificate file
   allowHTTP1: true
 };
 
