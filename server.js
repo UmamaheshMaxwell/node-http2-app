@@ -18,11 +18,18 @@ const options = {
   allowHTTP1: true
 };
 
-const server = spdy.createServer(options, app)
+const server = spdy.createServer(options, (req, res) => {
+    res.writeHead(200);
+    res.end('Hello world over HTTP/2');
+})
+
+
 
 //server.on('request', app);
 
 const PORT = process.env.PORT || 8080;
+
+//spdy.createServer(options).listen(PORT);
 
 server.listen(PORT, () => {
   console.log(`Server listening to PORT ${PORT} successfully !!!`);
