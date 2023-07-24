@@ -14,7 +14,7 @@ steps:
      - run
      - deploy
      - node-http2-service
-     - --allow-unauthenticated
+     - --no-allow-unauthenticated
      - --image=gcr.io/$_PROJECT_ID/node-api:$COMMIT_SHA
      - --port=8080
      - --region=us-central1
