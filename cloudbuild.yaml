@@ -18,5 +18,8 @@ steps:
      - --image=gcr.io/$_PROJECT_ID/node-api:$COMMIT_SHA
      - --port=8080
      - --region=us-central1
+     - --service-account=${_SERVICE_ACCOUNT_NAME}
+substitutions:
+  _SERVICE_ACCOUNT_NAME: $$_SERVICE_ACCOUNT_NAME
 options:
   logging: CLOUD_LOGGING_ONLY
