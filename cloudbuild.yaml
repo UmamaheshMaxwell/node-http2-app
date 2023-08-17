@@ -3,23 +3,24 @@ substitutions:
 steps:
   #Build the container Image 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ["build", "-t", "gcr.io/$_PROJECT_ID/node-api:$COMMIT_SHA", "."]
+    args: ["build", "-t", "gcr.io/$_PROJECT_ID/${_SERVICE_NAME}:$COMMIT_SHA", "."]
   # pusth the repo to container registry 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ["push", "gcr.io/$_PROJECT_ID/node-api:$COMMIT_SHA" ]
+    args: ["push", "gcr.io/$_PROJECT_ID/${_SERVICE_NAME}:$COMMIT_SHA" ]
    # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args: 
      - run
      - deploy
-     - node-http2-service
+     - ${_SERVICE_NAME}
      - --no-allow-unauthenticated
      - --image=gcr.io/$_PROJECT_ID/node-api:$COMMIT_SHA
      - --port=8080
      - --region=us-central1
      - --service-account=${_SERVICE_ACCOUNT_NAME}
 substitutions:
+  _SERVICE_NAME: node-http2-api
   _SERVICE_ACCOUNT_NAME: $$_SERVICE_ACCOUNT_NAME
 options:
   logging: CLOUD_LOGGING_ONLY
