@@ -13,7 +13,7 @@ steps:
      - deploy
      - ${_SERVICE_NAME}
      - --no-allow-unauthenticated
-     - --image=gcr.io/$PROJECT_ID/node-api:$COMMIT_SHA
+     - --image=gcr.io/$PROJECT_ID/${_SERVICE_NAME}:$COMMIT_SHA
      - --port=8080
      - --region=us-central1
      - --service-account=${_SERVICE_ACCOUNT_NAME}
