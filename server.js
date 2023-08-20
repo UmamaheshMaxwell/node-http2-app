@@ -26,8 +26,8 @@
 //   console.log(`SSL ${useSSL ? 'enabled' : 'disabled'}`);
 // });
 
-const http2 = require('node:http2');
-const fs = require('node:fs');
+const http2 = require('http2');
+const fs = require('fs');
 
 const CERT_DIR = `${__dirname}/cert`;
 const useSSL = !!process.env.SSL;
