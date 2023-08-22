@@ -18,8 +18,7 @@ function createServer() {
     return spdy.createServer(
         {
             key: fs.readFileSync(`${CERT_DIR}/server.key`),
-            cert: fs.readFileSync(`${CERT_DIR}/server.cert`),
-            allowHTTP1: true
+            cert: fs.readFileSync(`${CERT_DIR}/server.cert`)
         },
         app
     );
