@@ -1,28 +1,29 @@
 const express = require('express');
-const http2 = require('http2');
+const spdy = require('spdy');
 const fs = require('fs');
-const adminRouter = require('./routes/admin.router');
 
 const PORT = 8080;
 const CERT_DIR = `${__dirname}/cert`;
-const useSSL = !!process.env.SSL;
 
 const app = express();
 
-app.use('/api', adminRouter);
+app.get('/', (_, res) => {
+  res.send('hello world');
+});
 
-const serverOptions = {
-  key: fs.readFileSync(`${CERT_DIR}/server.key`),
-  cert: fs.readFileSync(`${CERT_DIR}/server.cert`)
-};
+const server = spdy.createServer(
+  {
+    key: fs.readFileSync(`${CERT_DIR}/server.key`),
+    cert: fs.readFileSync(`${CERT_DIR}/server.cert`),
+  },
+  app
+);
 
-const server = useSSL
-  ? http2.createSecureServer(serverOptions, app)
-  : http2.createServer(app);
+//createServer();
 
 server.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
-  console.log(`SSL ${useSSL ? 'enabled' : 'disabled'}`);
+  console.log('SSL Enabled');
 });
 
 // const http2 = require('http2');
