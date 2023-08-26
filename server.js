@@ -3,7 +3,7 @@ const spdy = require('spdy');
 const fs = require('fs');
 const adminRouter = require("./routes/admin.router")
 
-const PORT = 8080;
+const PORT = 443;
 const CERT_DIR = `${__dirname}/cert`;
 const useSSL = !!process.env.SSL;
 
