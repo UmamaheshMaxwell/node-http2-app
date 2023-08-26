@@ -14,7 +14,7 @@ steps:
      - ${_SERVICE_NAME}
      - --allow-unauthenticated
      - --image=gcr.io/$PROJECT_ID/${_SERVICE_NAME}:$COMMIT_SHA
-     - --port=8080
+     - --port=443
      - --region=us-central1
      - --service-account=${_SERVICE_ACCOUNT_NAME}
 substitutions:
