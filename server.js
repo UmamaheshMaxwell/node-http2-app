@@ -14,9 +14,7 @@ app.get('*', (req, res) => {
 })
 const options = {
     key: fs.readFileSync(`${CERT_DIR}/server.key`),
-    cert: fs.readFileSync(`${CERT_DIR}/server.crt`),
-    passphrase: "sF6EJzpNqKI6pO43lRuXYPb1x/SZlNc22ZR7S2D5kM4=",
-    rejectUnauthorized: false 
+    cert: fs.readFileSync(`${CERT_DIR}/server.crt`)
 }
 
 spdy
