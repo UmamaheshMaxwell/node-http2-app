@@ -1,28 +1,23 @@
-const spdy = require('spdy')
-const express = require('express')
-const path = require('path')
-const fs = require('fs')
+const http2 = require("http2")
+const os = require("os")
 
-const port = 8080
-const CERT_DIR = `${__dirname}/cert`;
-const app = express()
 
-app.get('*', (req, res) => {
-  res
-    .status(200)
-    .json({message: 'Welcome to node HTTP2'})
-})
-const options = {
-    key: fs.readFileSync(`${CERT_DIR}/server.key`),
-    cert: fs.readFileSync(`${CERT_DIR}/server.crt`)
-}
+const PORT = process.env.PORT || 8080
+const addr = `0.0.0.0:${PORT}`
 
-spdy
-  .createServer(options, app)
-  .listen(port, (error) => {
-    if (error) {
-      console.error(error)
-    } else {
-      console.log('Listening on port: ' + port + '.')
-    }
+
+const server = http2.createServer()
+
+server.on("stream", (stream, headers) => {
+  stream.respond({
+    'content-type': 'text/plain',
+    ':status': 200
   })
+  console.log(headers)
+  stream.end(`This requested is served over HTTP2 protocol using NodeJS`)
+})
+
+server.listen(PORT, ()=>{
+  console.log(`Server is listening at ${PORT}`)
+})
+

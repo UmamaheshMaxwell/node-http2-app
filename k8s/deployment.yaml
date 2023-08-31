@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-http2-api
+spec:
+  selector:
+    matchLabels:
+      app: node-http2-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: node-http2-api
+    spec:
+      containers:
+        - name: node-http2-api
+          image: gcr.io/gcp-devops-396013/node-http2-api@sha256:b35cd2504eba476edaa526fcf46eb31e8f98a8cd3970f7979dc28b2cd08f30b5
+          #image: us-docker.pkg.dev/google-samples/containers/gke/hello-app:1.0
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-http2-svc
+spec:
+  selector:
+    app: node-http2-api
+  type: NodePort
+  ports:
+    - name: node-http2-api
+      port: 8080
+      targetPort: 8080

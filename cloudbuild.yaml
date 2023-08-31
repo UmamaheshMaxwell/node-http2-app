@@ -5,7 +5,7 @@ steps:
   # pusth the repo to container registry 
   - name: 'gcr.io/cloud-builders/docker'
     args: ["push", "gcr.io/$PROJECT_ID/${_SERVICE_NAME}:$COMMIT_SHA" ]
-   # Deploy container image to Cloud Run
+  #  # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args: 
@@ -17,6 +17,15 @@ steps:
      - --port=8080
      - --region=us-central1
      - --service-account=${_SERVICE_ACCOUNT_NAME}
+  # # Deploy containers to GKE
+  # - name: 'gcr.io/cloud-builders/gke-deploy'
+  #   args:
+  #   - run 
+  #   - --filename=k8s/deployment.yaml
+  #   # Below line will replace the conatiner image in deployement file 
+  #   - --image=gcr.io/$PROJECT_ID/${_SERVICE_NAME}:$COMMIT_SHA
+  #   - --location=us-central1-a
+  #   - --cluster=k8s-cluster
 substitutions:
   _SERVICE_NAME: node-http2-api
   _SERVICE_ACCOUNT_NAME: $$_SERVICE_ACCOUNT_NAME
