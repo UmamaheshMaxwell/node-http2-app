@@ -46,7 +46,6 @@ server.route({
 async function startServer() {
   try {
     await server.start();
-    console.log(server.info);
     console.log(`Server started at ${server.info.uri}`);
   } catch (error) {
     console.error(error);
