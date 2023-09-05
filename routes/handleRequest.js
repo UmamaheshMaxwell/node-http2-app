@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 function handleRequest(stream, method, path) {
     if (method === 'GET' && path === '/') {
       stream.respond({ ':status': 200, 'content-type': 'text/plain' });
